@@ -1,8 +1,6 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 func Pic(dx, dy int) [][]int {
 	var result [][]int;
