@@ -19,7 +19,7 @@ func main() {
 	fmt.Println(strings.Join(os.Args[1:], ","))
 	// 练习分割函数
 	for ind, val := range os.Args {
-		if (ind == 0) {
+		if ind == 0 {
 			continue
 		}
 		fmt.Printf("%s = %s\n", strings.Split(val, "=")[0], strings.Split(val, "=")[1])
