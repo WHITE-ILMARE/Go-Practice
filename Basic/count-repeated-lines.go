@@ -1,3 +1,4 @@
+// 获取命令行指定的文件中重复行的列表
 package main
 
 import (
