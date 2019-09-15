@@ -15,5 +15,5 @@ func main() {
 	fmt.Println(pointer);
 	fmt.Println(arr);
 	pointer_arr = &arr;
-	fmt.Println(pointer_arr);
+	fmt.Printf("address of array is %p\n",pointer_arr);
 }
