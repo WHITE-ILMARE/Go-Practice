@@ -1,5 +1,5 @@
-// 生成利萨如曲线gif图,用到了const声明、image包等
-package main
+// 生成利萨如曲线gif图,作为server1导入的外部包
+package lissajous
 
 import (
 	"image"
@@ -8,7 +8,6 @@ import (
 	"io"
 	"math"
 	"math/rand"
-	"os"
 )
 
 var palette = []color.Color{color.White, color.Black, color.RGBA{0x36, 0x78, 0x23, 0x2E}}
@@ -19,7 +18,7 @@ const (
 	selfColorIndex = 2
 )
 
-func lissajous(out io.Writer) {
+func Lissajous(out io.Writer) {
 	const (
 		cycles = 5
 		res = 0.001
@@ -45,6 +44,6 @@ func lissajous(out io.Writer) {
 	gif.EncodeAll(out, &anim) // ignoring encoding errors
 }
 
-func main() {
-	lissajous(os.Stdout)
-}
+//func main() {
+//	lissajous(os.Stdout)
+//}
