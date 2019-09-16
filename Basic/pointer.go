@@ -16,4 +16,8 @@ func main() {
 	fmt.Println(arr);
 	pointer_arr = &arr;
 	fmt.Printf("address of array is %p\n",pointer_arr);
+	var va, vb int
+	var pa *int
+	fmt.Printf("&va == &vb ? %v\n&va ==nil ? %v\n", &va == &vb, &va == nil)
+	fmt.Printf("pa == nil ? %v\n", pa == nil)
 }
