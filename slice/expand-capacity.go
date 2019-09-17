@@ -1,3 +1,4 @@
+// slice的扩容机制
 package main
 
 import "fmt"
