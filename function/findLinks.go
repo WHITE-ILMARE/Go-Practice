@@ -4,24 +4,25 @@ package main
 import (
 	"fmt"
 	"golang.org/x/net/html"
+	"net/http"
 	"os"
 )
 
 func main() {
-	fmt.Println("in main")
-	doc, err := html.Parse(os.Stdin)
-	fmt.Println("hrere")
-	if err != nil {
-		fmt.Fprintf(os.Stdout, "error: %v\n", err);
-		os.Exit(1)
-	}
-	for index, link := range visit(nil, doc) {
-		fmt.Printf("%d link: %s\n", index, link)
+	for _, url := range os.Args[1:] {
+		links, err := findAndVisit(url)
+		if err != nil {
+			fmt.Fprintf(os.Stderr,"error occur: %v\n", err)
+			continue
+		}
+		for _, link := range links {
+			fmt.Printf("link: %s\n", link)
+		}
 	}
 }
 
-// 递归地将一个节点及其子节点中的a标签中的超链接提取出来存入links中
-func visit(links []string, node *html.Node) []string {
+// 将一个节点及其子节点中的a标签中的超链接提取出来存入links中
+func BFS_visit(links []string, node *html.Node) []string {
 	if node.Type == html.ElementNode && node.Data == "a" {
 		for _, attr := range node.Attr {
 			if attr.Key == "href" {
@@ -30,7 +31,25 @@ func visit(links []string, node *html.Node) []string {
 		}
 	}
 	for nextNode := node.FirstChild; nextNode != nil; nextNode = nextNode.NextSibling {
-		links = visit(links, nextNode)
+		links = BFS_visit(links, nextNode)
 	}
 	return links
+}
+
+// 访问参数中的链接，并返回链接中的超链接地址
+func findAndVisit(url string) ([]string, error) {
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	if (resp.StatusCode != http.StatusOK) {
+		resp.Body.Close()
+		return nil, fmt.Errorf("getting %s error: %s\n", url, resp.Status)
+	}
+	doc, err := html.Parse(resp.Body)
+	resp.Body.Close()
+	if err != nil {
+		return nil, err
+	}
+	return BFS_visit(nil, doc), nil
 }
