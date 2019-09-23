@@ -33,8 +33,8 @@ func CountImages(url string) (images []string, err error) {
 	doc, err := html2.Parse(resp.Body)
 	resp.Body.Close()
 	if err != nil {
-		fmt.Errorf("parsing html error: %v\n", err)
-		return
+		// 返回自己构造的错误
+		return nil, fmt.Errorf("parsing %s as HTML error: %v\n", url, err)
 	}
 	images = countImages(nil, doc)
 	return
