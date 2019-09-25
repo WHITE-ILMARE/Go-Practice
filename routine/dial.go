@@ -1,3 +1,4 @@
+// 每300ms读取tcp连接内容，持续5s
 package main
 
 import (
@@ -15,12 +16,11 @@ func main() {
 
 func connectToHost(host string) {
 	conn, err := net.Dial("tcp", host)
-
+	defer conn.Close()
 	if err != nil {
 		log.Fatal(err)
 		return
 	}
-	fmt.Fprintf(conn, "GET / HTTP/1.0\r\n\r\n")
 	for {
 		status, err := bufio.NewReader(conn).ReadString('\n')
 		if err != nil {

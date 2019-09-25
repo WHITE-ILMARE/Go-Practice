@@ -6,10 +6,13 @@ import (
 	"io"
 	"log"
 	"net"
+	"os"
 	"time"
 )
 
 func main() {
+	args := os.Args[1:]
+	fmt.Println(args)
 	listener, err := net.Listen("tcp", "localhost:8000")
 	if err != nil {
 		log.Fatal(err)
@@ -21,7 +24,7 @@ func main() {
 			log.Fatal(err)
 			continue
 		}
-		handleConn(conn)
+		go handleConn(conn)
 	}
 }
 
