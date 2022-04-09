@@ -3,11 +3,13 @@ module example.com/go-practice
 go 1.18
 
 require (
-	github.com/astaxie/beego v1.12.3 // indirect
+	github.com/astaxie/beego v1.10.1 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.1.1 // indirect
+	github.com/garyburd/redigo v1.6.3 // indirect
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/golang/protobuf v1.4.2 // indirect
+	github.com/gomodule/redigo v1.8.8 // indirect
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
 	github.com/lib/pq v1.10.4 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect
