@@ -17,36 +17,25 @@ var wg sync.WaitGroup
 func main() {
 	ctx := selfctx.NewSimpleContex()
 	wg.Add(1)
-	go work(ctx)
-	//time.Sleep(time.Second * 4)
+	go work(&ctx)
+	time.Sleep(time.Second * 4)
 	ctx.Cancel()
 	wg.Wait()
+	fmt.Println("main等到了wg，退出")
 }
 
-func work(ctx selfctx.SimpleContex) {
-
-LOOP:
-	for {
-		fmt.Println("worker")
-		time.Sleep(time.Second)
+func work(ctx *selfctx.SimpleContex) {
+	ticker := time.NewTicker(time.Second)
+	count := 0
+	defer wg.Done()
+	for _ = range ticker.C {
+		fmt.Printf("worker is working: %d\n", count)
+		count++
 		select {
 		case <-ctx.Done():
-			fmt.Println("退出worker")
-			break LOOP
-		default:
+			fmt.Println("关闭上下文，退出worker")
+			return
+		default: // 必须有default，因为没有channel的输入，只有接受和关闭，不设置default会导致deadlock
 		}
 	}
-	//ticker := time.NewTicker(time.Second)
-	//count := 0
-	//for _ = range ticker.C {
-	//	fmt.Printf("worker is working: %d\n", count)
-	//	count++
-	//	select {
-	//	case <-ctx.Done():
-	//		fmt.Println("关闭上下文，退出worker")
-	//		break
-	//	default: // 必须有default，因为没有channel的输入，只有接受和关闭，不设置default会导致deadlock
-	//	}
-	//}
-	wg.Done()
 }

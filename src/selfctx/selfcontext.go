@@ -1,9 +1,11 @@
 package selfctx
 
-import "sync"
+import (
+	"fmt"
+	"sync"
+)
 
 var closedchan = make(chan struct{})
-var wg sync.WaitGroup
 
 func init() {
 	close(closedchan)
@@ -24,16 +26,17 @@ func (c *SimpleContex) Done() <-chan struct{} {
 	if c.done == nil {
 		c.done = make(chan struct{})
 	}
-	d := c.done
 	c.mu.Unlock()
-	return d
+	return c.done
 }
 
 func (c *SimpleContex) Cancel() {
 	c.mu.Lock()
 	if c.done == nil {
+		fmt.Printf("in cancel, done is nil\n")
 		c.done = closedchan
 	} else {
+		fmt.Println("in cancel, done is not nil, going to close it")
 		close(c.done)
 	}
 	c.mu.Unlock()
