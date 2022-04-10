@@ -8,7 +8,6 @@ import (
 )
 
 // 在context中，通过关闭done这个channel传递关闭信号
-// 我很疑惑close(channel)可以被select监听到吗，做实验如下
 // 结果deadlock了，说明close的channel不会向外发送消息
 
 // 补充：后来查资料发现要求子goroutine中select时要带default，不然就会造成上面的死锁
@@ -19,7 +18,7 @@ func main() {
 	ctx := selfctx.NewSimpleContex()
 	wg.Add(1)
 	go work(ctx)
-	time.Sleep(time.Second * 4)
+	//time.Sleep(time.Second * 4)
 	ctx.Cancel()
 	wg.Wait()
 }
