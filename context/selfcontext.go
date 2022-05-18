@@ -1,4 +1,4 @@
-package selfctx
+package main
 
 import (
 	"fmt"

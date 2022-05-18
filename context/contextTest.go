@@ -1,7 +1,6 @@
 package main
 
 import (
-	"example.com/go-practice/src/selfctx"
 	"fmt"
 	"sync"
 	"time"
@@ -15,7 +14,7 @@ import (
 var wg sync.WaitGroup
 
 func main() {
-	ctx := selfctx.NewSimpleContex()
+	ctx := NewSimpleContex()
 	wg.Add(1)
 	go work(&ctx)
 	time.Sleep(time.Second * 4)
@@ -24,7 +23,7 @@ func main() {
 	fmt.Println("main等到了wg，退出")
 }
 
-func work(ctx *selfctx.SimpleContex) {
+func work(ctx *SimpleContex) {
 	ticker := time.NewTicker(time.Second)
 	count := 0
 	defer wg.Done()
