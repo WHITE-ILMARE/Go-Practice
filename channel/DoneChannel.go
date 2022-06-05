@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // 父子协程通过data和done通信，data传递数据，done标识是否完成了计算
 // 输出顺序不定
