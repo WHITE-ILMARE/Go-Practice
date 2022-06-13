@@ -2,7 +2,7 @@
 package main
 
 import (
-	"./lissajous"
+	"example.com/go-practice/Basic/lissajous"
 	"log"
 	"net/http"
 )
